@@ -11,5 +11,4 @@ public class JavaRecognitionApplication {
     public static void main(String[] args) {
         SpringApplication.run(JavaRecognitionApplication.class, args);
     }
-
 }
