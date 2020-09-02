@@ -27,4 +27,14 @@ public class RecognitionServiceImpl implements RecognitionService {
     public JavaImagePerformanceResultDTO processKMeans(byte[] data) {
         return KMeansExecutor.execute(data);
     }
+
+    @Override
+    public byte[] processThresholdTest(byte[] data) {
+        return thresholdExecutor.executeTest(data);
+    }
+
+    @Override
+    public byte[] processKMeansTest(byte[] data) {
+        return KMeansExecutor.executeTest(data);
+    }
 }

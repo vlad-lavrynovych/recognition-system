@@ -4,7 +4,11 @@ import com.demo.devkit.JavaImagePerformanceResultDTO;
 
 public interface RecognitionService {
 
-    public JavaImagePerformanceResultDTO processThreshold(byte[] data);
+    JavaImagePerformanceResultDTO processThreshold(byte[] data);
 
-    public JavaImagePerformanceResultDTO processKMeans(byte[] data);
+    JavaImagePerformanceResultDTO processKMeans(byte[] data);
+
+    byte[] processThresholdTest(byte[] data);
+
+    byte[] processKMeansTest(byte[] data);
 }

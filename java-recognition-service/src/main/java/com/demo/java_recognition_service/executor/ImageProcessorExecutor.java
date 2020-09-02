@@ -4,5 +4,7 @@ import com.demo.devkit.JavaImagePerformanceResultDTO;
 
 public interface ImageProcessorExecutor {
 
-    public JavaImagePerformanceResultDTO execute(byte[] data);
+    JavaImagePerformanceResultDTO execute(byte[] data);
+
+    byte[] executeTest(byte[] data);
 }

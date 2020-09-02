@@ -57,4 +57,43 @@ public class RecognitionController {
             throw new CouldNotParseFileException("Could not encode/decode file", ex);
         }
     }
+
+
+    //FOR TESTING PURPOSES
+    @RequestMapping(method = RequestMethod.POST, headers = "Content-Type= multipart/form-data", path = "/perform-kmeans-test")
+    public ResponseEntity<Resource> performKMeansTest(@RequestParam(value = "file") @Valid MultipartFile file) throws Throwable {
+
+        log.info("Received file: \n" +
+                "filename=\"" + file.getName() + "\"\n" +
+                "contentType=\"" + file.getContentType() + "\"\n" +
+                "size=\"" + file.getSize() + "\"\n");
+
+        try {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                    .body(new ByteArrayResource(recognitionService.processKMeansTest(file.getBytes())));
+        } catch (IOException ex) {
+            throw new CouldNotParseFileException("Could not encode/decode file", ex);
+        }
+    }
+
+    //FOR TESTING PURPOSES
+    @RequestMapping(method = RequestMethod.POST, headers = "Content-Type= multipart/form-data", path = "/perform-thresholding-test")
+    public ResponseEntity<Resource> performThresholdingTest(@RequestParam(value = "file") @Valid MultipartFile file) throws Throwable {
+
+        log.info("Received file: \n" +
+                "filename=\"" + file.getName() + "\"\n" +
+                "contentType=\"" + file.getContentType() + "\"\n" +
+                "size=\"" + file.getSize() + "\"\n");
+
+        try {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                    .body(new ByteArrayResource(recognitionService.processThresholdTest(file.getBytes())));
+        } catch (IOException ex) {
+            throw new CouldNotParseFileException("Could not encode/decode file", ex);
+        }
+    }
 }
