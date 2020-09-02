@@ -1,5 +1,6 @@
 package com.demo.java_recognition_service.executor.impl;
 
+import com.demo.devkit.JavaImagePerformanceResultDTO;
 import com.demo.java_recognition_service.executor.ImageProcessorExecutor;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
@@ -16,7 +17,7 @@ public class ThresholdExecutor implements ImageProcessorExecutor {
     }
 
     @Override
-    public byte[] execute(byte[] data) {
+    public JavaImagePerformanceResultDTO execute(byte[] data) {
         // TODO: 01.09.2020 MOVE HARDCODED VALUES TO REQUEST PARAMS
         boolean erosion = true;
         boolean blurSelected = true;
@@ -45,7 +46,8 @@ public class ThresholdExecutor implements ImageProcessorExecutor {
 
         MatOfByte matOfByte = new MatOfByte();
         Imgcodecs.imencode(".jpeg", img, matOfByte);
-        return matOfByte.toArray();
+
+        return new JavaImagePerformanceResultDTO(counter, matOfByte.toArray());
         // TODO: 01.09.2020  return percentage of area in response
     }
 

@@ -1,8 +1,10 @@
 package com.demo.java_recognition_service.service;
 
+import com.demo.devkit.JavaImagePerformanceResultDTO;
+
 public interface RecognitionService {
 
-    public byte[] processThreshold(byte[] data);
+    public JavaImagePerformanceResultDTO processThreshold(byte[] data);
 
-    public byte[] processKMeans(byte[] data);
+    public JavaImagePerformanceResultDTO processKMeans(byte[] data);
 }

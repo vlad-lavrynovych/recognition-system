@@ -1,5 +1,6 @@
 package com.demo.java_recognition_service.service.impl;
 
+import com.demo.devkit.JavaImagePerformanceResultDTO;
 import com.demo.java_recognition_service.executor.ImageProcessorExecutor;
 import com.demo.java_recognition_service.service.RecognitionService;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,12 @@ public class RecognitionServiceImpl implements RecognitionService {
 
 
     @Override
-    public byte[] processThreshold(byte[] data) {
+    public JavaImagePerformanceResultDTO processThreshold(byte[] data) {
         return thresholdExecutor.execute(data);
     }
 
     @Override
-    public byte[] processKMeans(byte[] data) {
+    public JavaImagePerformanceResultDTO processKMeans(byte[] data) {
         return KMeansExecutor.execute(data);
     }
 }
