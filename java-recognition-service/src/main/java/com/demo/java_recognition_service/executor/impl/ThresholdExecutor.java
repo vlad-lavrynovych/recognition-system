@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ThresholdExecutor implements ImageProcessorExecutor {
 
+    static {
+        nu.pattern.OpenCV.loadShared();
+    }
+
     @Override
     public byte[] execute(byte[] data) {
         // TODO: 01.09.2020 MOVE HARDCODED VALUES TO REQUEST PARAMS
@@ -19,7 +23,10 @@ public class ThresholdExecutor implements ImageProcessorExecutor {
         int value = 122;
 
 
-        Mat img = Imgcodecs.imdecode(new MatOfByte(data), Imgcodecs.IMREAD_UNCHANGED);
+        Mat img1 = Imgcodecs.imdecode(new MatOfByte(data), Imgcodecs.IMREAD_UNCHANGED);
+        Mat img = new Mat();
+        Imgproc.cvtColor(img1, img, Imgproc.COLOR_RGBA2BGR,0);
+
         if (erosion) {
             Imgproc.erode(img, img, Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3)));
         }

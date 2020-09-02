@@ -15,7 +15,7 @@
     <description>Java Recognition Service</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <spring-cloud.version>Hoxton.SR7</spring-cloud.version>
     </properties>
 
