@@ -1,40 +1,51 @@
 package com.demo.java_recognition_service.service.impl;
 
 import com.demo.devkit.JavaImagePerformanceResultDTO;
-import com.demo.java_recognition_service.executor.ImageProcessorExecutor;
+import com.demo.java_recognition_service.executor.KMeansExecutor;
+import com.demo.java_recognition_service.executor.ThresholdExecutor;
 import com.demo.java_recognition_service.service.RecognitionService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RecognitionServiceImpl implements RecognitionService {
 
-    private final ImageProcessorExecutor thresholdExecutor;
+    private final ThresholdExecutor thresholdExecutor;
 
-    private final ImageProcessorExecutor KMeansExecutor;
+    private final KMeansExecutor kMeansExecutor;
 
-    public RecognitionServiceImpl(ImageProcessorExecutor thresholdExecutor, ImageProcessorExecutor KMeansExecutor) {
+    public RecognitionServiceImpl(ThresholdExecutor thresholdExecutor, KMeansExecutor kMeansExecutor) {
         this.thresholdExecutor = thresholdExecutor;
-        this.KMeansExecutor = KMeansExecutor;
+        this.kMeansExecutor = kMeansExecutor;
     }
 
 
     @Override
-    public JavaImagePerformanceResultDTO processThreshold(byte[] data) {
-        return thresholdExecutor.execute(data);
+    public JavaImagePerformanceResultDTO processThreshold(byte[] data,
+                                                          boolean erosion,
+                                                          boolean blurSelected,
+                                                          int value) {
+        return thresholdExecutor.execute(data, erosion, blurSelected, value);
     }
 
     @Override
-    public JavaImagePerformanceResultDTO processKMeans(byte[] data) {
-        return KMeansExecutor.execute(data);
+    public JavaImagePerformanceResultDTO processKMeans(byte[] data,
+                                                       boolean erosion,
+                                                       boolean blurSelected) {
+        return kMeansExecutor.execute(data, erosion, blurSelected);
     }
 
     @Override
-    public byte[] processThresholdTest(byte[] data) {
-        return thresholdExecutor.executeTest(data);
+    public byte[] processThresholdTest(byte[] data,
+                                       boolean erosion,
+                                       boolean blurSelected,
+                                       int value) {
+        return thresholdExecutor.executeTest(data, erosion, blurSelected, value);
     }
 
     @Override
-    public byte[] processKMeansTest(byte[] data) {
-        return KMeansExecutor.executeTest(data);
+    public byte[] processKMeansTest(byte[] data,
+                                    boolean erosion,
+                                    boolean blurSelected) {
+        return kMeansExecutor.executeTest(data, erosion, blurSelected);
     }
 }

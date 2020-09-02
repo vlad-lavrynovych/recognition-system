@@ -1,7 +1,6 @@
-package com.demo.java_recognition_service.executor.impl;
+package com.demo.java_recognition_service.executor;
 
 import com.demo.devkit.JavaImagePerformanceResultDTO;
-import com.demo.java_recognition_service.executor.ImageProcessorExecutor;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Size;
@@ -10,18 +9,14 @@ import org.opencv.imgproc.Imgproc;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ThresholdExecutor implements ImageProcessorExecutor {
+public class ThresholdExecutor {
 
     static {
         nu.pattern.OpenCV.loadShared();
     }
 
-    @Override
-    public JavaImagePerformanceResultDTO execute(byte[] data) {
+    public JavaImagePerformanceResultDTO execute(byte[] data, boolean erosion, boolean blurSelected, int value) {
         // TODO: 01.09.2020 MOVE HARDCODED VALUES TO REQUEST PARAMS
-        boolean erosion = true;
-        boolean blurSelected = true;
-        int value = 122;
 
         Mat result = performThresholding(data, erosion, blurSelected, value);
 
@@ -32,12 +27,8 @@ public class ThresholdExecutor implements ImageProcessorExecutor {
         return new JavaImagePerformanceResultDTO(percentage, resultBytes);
     }
 
-    @Override
-    public byte[] executeTest(byte[] data) {
+    public byte[] executeTest(byte[] data, boolean erosion, boolean blurSelected, int value) {
         // TODO: 01.09.2020 MOVE HARDCODED VALUES TO REQUEST PARAMS
-        boolean erosion = true;
-        boolean blurSelected = true;
-        int value = 122;
 
         Mat result = performThresholding(data, erosion, blurSelected, value);
 

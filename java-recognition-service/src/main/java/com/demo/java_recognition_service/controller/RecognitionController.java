@@ -29,7 +29,12 @@ public class RecognitionController {
     }
 
     @RequestMapping(method = RequestMethod.POST, headers = "Content-Type= multipart/form-data", path = "/perform-thresholding")
-    public ResponseEntity<JavaImagePerformanceResultDTO> performThresholding(@RequestParam(value = "file") @Valid MultipartFile file) throws CouldNotParseFileException {
+    public ResponseEntity<JavaImagePerformanceResultDTO> performThresholding(
+            @RequestParam(value = "id") int id,
+            @RequestParam(value = "file") @Valid MultipartFile file,
+            @RequestParam(value = "erosion") boolean erosion,
+            @RequestParam(value = "blur") boolean blurSelected,
+            @RequestParam(value = "thresholdValue") int value) throws CouldNotParseFileException {
 
         log.info("Received file: \n" +
                 "filename=\"" + file.getName() + "\"\n" +
@@ -37,14 +42,25 @@ public class RecognitionController {
                 "size=\"" + file.getSize() + "\"\n");
 
         try {
-            return new ResponseEntity<>(recognitionService.processThreshold(file.getBytes()), HttpStatus.OK);
+            JavaImagePerformanceResultDTO resultDTO = recognitionService.processThreshold(file.getBytes(),
+                    erosion,
+                    blurSelected,
+                    value);
+
+            resultDTO.setId(id);
+
+            return new ResponseEntity<>(resultDTO, HttpStatus.OK);
         } catch (IOException ex) {
             throw new CouldNotParseFileException("Could not encode/decode file", ex);
         }
     }
 
     @RequestMapping(method = RequestMethod.POST, headers = "Content-Type= multipart/form-data", path = "/perform-kmeans")
-    public ResponseEntity<JavaImagePerformanceResultDTO> performKMeans(@RequestParam(value = "file") @Valid MultipartFile file) throws CouldNotParseFileException {
+    public ResponseEntity<JavaImagePerformanceResultDTO> performKMeans(
+            @RequestParam(value = "id") int id,
+            @RequestParam(value = "file") @Valid MultipartFile file,
+            @RequestParam(value = "erosion") boolean erosion,
+            @RequestParam(value = "blur") boolean blurSelected) throws CouldNotParseFileException {
 
         log.info("Received file: \n" +
                 "filename=\"" + file.getName() + "\"\n" +
@@ -52,7 +68,14 @@ public class RecognitionController {
                 "size=\"" + file.getSize() + "\"\n");
 
         try {
-            return new ResponseEntity<>(recognitionService.processKMeans(file.getBytes()), HttpStatus.OK);
+            JavaImagePerformanceResultDTO resultDTO = recognitionService.processKMeans(
+                    file.getBytes(),
+                    erosion,
+                    blurSelected);
+
+            resultDTO.setId(id);
+
+            return new ResponseEntity<>(resultDTO, HttpStatus.OK);
         } catch (IOException ex) {
             throw new CouldNotParseFileException("Could not encode/decode file", ex);
         }
@@ -61,7 +84,10 @@ public class RecognitionController {
 
     //FOR TESTING PURPOSES
     @RequestMapping(method = RequestMethod.POST, headers = "Content-Type= multipart/form-data", path = "/perform-kmeans-test")
-    public ResponseEntity<Resource> performKMeansTest(@RequestParam(value = "file") @Valid MultipartFile file) throws Throwable {
+    public ResponseEntity<Resource> performKMeansTest(
+            @RequestParam(value = "file") @Valid MultipartFile file,
+            @RequestParam(value = "erosion") boolean erosion,
+            @RequestParam(value = "blur") boolean blurSelected) throws CouldNotParseFileException {
 
         log.info("Received file: \n" +
                 "filename=\"" + file.getName() + "\"\n" +
@@ -69,10 +95,16 @@ public class RecognitionController {
                 "size=\"" + file.getSize() + "\"\n");
 
         try {
+
+            byte[] resultBytes = recognitionService.processKMeansTest(
+                    file.getBytes(),
+                    erosion,
+                    blurSelected);
+
             return ResponseEntity.ok()
                     .contentType(MediaType.IMAGE_JPEG)
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-                    .body(new ByteArrayResource(recognitionService.processKMeansTest(file.getBytes())));
+                    .body(new ByteArrayResource(resultBytes));
         } catch (IOException ex) {
             throw new CouldNotParseFileException("Could not encode/decode file", ex);
         }
@@ -80,7 +112,11 @@ public class RecognitionController {
 
     //FOR TESTING PURPOSES
     @RequestMapping(method = RequestMethod.POST, headers = "Content-Type= multipart/form-data", path = "/perform-thresholding-test")
-    public ResponseEntity<Resource> performThresholdingTest(@RequestParam(value = "file") @Valid MultipartFile file) throws Throwable {
+    public ResponseEntity<Resource> performThresholdingTest(
+            @RequestParam(value = "file") @Valid MultipartFile file,
+            @RequestParam(value = "erosion") boolean erosion,
+            @RequestParam(value = "blur") boolean blurSelected,
+            @RequestParam(value = "thresholdValue") int value) throws CouldNotParseFileException {
 
         log.info("Received file: \n" +
                 "filename=\"" + file.getName() + "\"\n" +
@@ -88,10 +124,17 @@ public class RecognitionController {
                 "size=\"" + file.getSize() + "\"\n");
 
         try {
+
+            byte[] resultBytes = recognitionService.processThresholdTest(
+                    file.getBytes(),
+                    erosion,
+                    blurSelected,
+                    value);
+
             return ResponseEntity.ok()
                     .contentType(MediaType.IMAGE_JPEG)
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-                    .body(new ByteArrayResource(recognitionService.processThresholdTest(file.getBytes())));
+                    .body(new ByteArrayResource(resultBytes));
         } catch (IOException ex) {
             throw new CouldNotParseFileException("Could not encode/decode file", ex);
         }
