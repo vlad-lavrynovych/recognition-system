@@ -1,0 +1,4 @@
+Image 001 was approximately 0.297369 segmented (19260 pixels)
+Image 002 was approximately 0.200284 segmented (12972 pixels)
+Image 003 was approximately 0.310354 segmented (20101 pixels)
+Image 004 was approximately 0.236530 segmented (2043484 pixels)

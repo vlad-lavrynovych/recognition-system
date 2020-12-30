@@ -2,7 +2,7 @@ package com.demo.java_recognition_service.controller;
 
 import com.demo.devkit.JavaImagePerformanceResultDTO;
 import com.demo.java_recognition_service.exception.CouldNotParseFileException;
-import com.demo.java_recognition_service.service.RecognitionService;
+import com.demo.java_recognition_service.service.api.RecognitionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
