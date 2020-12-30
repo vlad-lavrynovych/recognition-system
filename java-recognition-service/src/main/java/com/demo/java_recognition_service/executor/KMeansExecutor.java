@@ -15,9 +15,10 @@ import java.util.Map;
 @Slf4j
 public class KMeansExecutor {
 
-    public JavaImagePerformanceResultDTO execute(byte[] data,
-                                                 boolean erosion,
-                                                 boolean blurSelected) {
+    public JavaImagePerformanceResultDTO execute(
+            byte[] data,
+            boolean erosion,
+            boolean blurSelected) {
 
         Mat img = performPreProcessing(data, erosion, blurSelected);
 
@@ -30,9 +31,10 @@ public class KMeansExecutor {
         return new JavaImagePerformanceResultDTO(percentage, resultBytes);
     }
 
-    public byte[] executeTest(byte[] data,
-                              boolean erosion,
-                              boolean blurSelected) {
+    public byte[] executeTest(
+            byte[] data,
+            boolean erosion,
+            boolean blurSelected) {
 
         Mat img = performPreProcessing(data, erosion, blurSelected);
 
